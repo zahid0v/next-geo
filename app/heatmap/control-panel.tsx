@@ -1,4 +1,5 @@
 import * as React from 'react';
+import './index.css'
 
 function formatTime(time: number): string {
   const date = new Date(time);
@@ -34,8 +35,8 @@ function ControlPanel({
   };
 
   return (
-    <div className="font-helvetica absolute top-[100px] right-0 max-w-[320px] bg-white shadow-md p-6 m-5 text-[15px] leading-8 text-gray-500 outline-none" >
-      <h3>Heatmap</h3>
+    <div className="control-panel" > 
+         <h3>Heatmap</h3>
       <p>
         Map showing earthquakes
         <br />

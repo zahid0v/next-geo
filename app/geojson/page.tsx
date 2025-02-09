@@ -80,6 +80,7 @@ import Map, { Source, Layer } from "react-map-gl/mapbox";
 import { MapLayerMouseEvent } from "mapbox-gl";
 import { dataLayer } from "./map-style";
 import { updatePercentiles } from "./utils";
+import './index.css'
 
 export default function Page() {
   const [year, setYear] = useState<number>(2015);
@@ -112,7 +113,7 @@ export default function Page() {
   }, [allData, year]);
 
   return (
-    <>
+    <div className="relative w-full h-screen">
       <Map
         initialViewState={{
           latitude: 40,
@@ -142,6 +143,6 @@ export default function Page() {
         )}
       </Map>
       <ControlPanel year={year} onChange={(value) => setYear(value)} />
-    </>
+    </div>
   );
 }
