@@ -1,9 +1,9 @@
-
 import { experimentalStyled as styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import ActionAreaCard from './card';
 import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 
 const Item = styled(Paper)(({ theme }) => ({
   height: '280px',
@@ -58,51 +58,52 @@ const productData = [
       image: '/Capture3.png',
       url: '/advanced_marker/'
     }
-  ];
+];
 
 export default function ResponsiveGrid() {
   return (
-    
-    <Container sx={{ 
-        py: 4,  // Add vertical padding
-        display: 'flex', 
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop:'0px'
-      }}>
-      <Grid 
-        container 
-        spacing={{ xs: 2, md: 3 }} 
-        columns={{ xs: 4, sm: 8, md: 12 }}
-        sx={{
-            width: '100%',
-            margin: 0  // Remove default margin
-          }}
-                >
-        {productData.map((product) => (
+    <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+      <Container 
+        maxWidth="lg" 
+        sx={{ 
+          display: 'flex',
+          justifyContent: 'center',
+          px: { xs: 2, sm: 3, md: 4 }
+        }}
+      >
+        <Box sx={{ maxWidth: 1200, width: '100%', py: 4 }}>
           <Grid 
-            item 
-            xs={2} 
-            sm={4} 
-            md={4} 
-            key={product.id}
-            sx={{ 
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'stretch',
-              }}
+            container 
+            spacing={3}
+            justifyContent="center"
           >
-            <Item>
-              <ActionAreaCard 
-                name={product.name}
-                description={product.description}
-                image={product.image}
-                url={product.url}
-              />
-            </Item>
+            {productData.map((product) => (
+              <Grid 
+                item 
+                xs={12}
+                sm={6}
+                md={4}
+                key={product.id}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center'
+                }}
+              >
+                <Box sx={{ width: '100%', maxWidth: 350 }}>
+                  <Item>
+                    <ActionAreaCard 
+                      name={product.name}
+                      description={product.description}
+                      image={product.image}
+                      url={product.url}
+                    />
+                  </Item>
+                </Box>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
+        </Box>
       </Container>
+    </Box>
   );
 }
