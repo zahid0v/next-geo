@@ -48,7 +48,7 @@ const productData = [
       description: 'Plug more informations to your map locations',
       price: 49.99,
       image: '/Capture5.png',
-      url: '/advanced-marker/'
+      url: '/advanced_marker/'
     },
     {
       id: 5,
@@ -56,7 +56,7 @@ const productData = [
       description: 'Display and navigate between Cad drawings on a map',
       price: 179.99,
       image: '/Capture3.png',
-      url: '/advanced-marker/'
+      url: '/advanced_marker/'
     }
   ];
 
