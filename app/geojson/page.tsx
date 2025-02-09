@@ -133,7 +133,7 @@ export default function Page() {
         )}
         {hoverInfo && (
           <div
-            className="absolute m-2 p-1 bg-black/80 text-white max-w-[300px] text-[10px] z-[9] pointer-events-none"
+            className="tooltip"
             style={{ left: hoverInfo.x, top: hoverInfo.y }}
           >
             <div>State: {hoverInfo.feature.properties?.name ?? "Unknown"}</div>
