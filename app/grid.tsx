@@ -56,7 +56,7 @@ const productData = [
       description: 'Display and navigate between Cad drawings on a map',
       price: 179.99,
       image: '/Capture3.png',
-      url: '/multiple-maps/'
+      url: '/advanced-marker/'
     }
   ];
 

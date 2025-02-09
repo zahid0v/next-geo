@@ -1,6 +1,11 @@
 import * as React from 'react';
 
-export default function ControlPanel(props) {
+interface ControlPanelProps {
+  year: number;
+  onChange: (value: number) => void;
+}
+
+export default function ControlPanel(props:ControlPanelProps) {
   const {year} = props;
 
   return (
@@ -29,7 +34,7 @@ export default function ControlPanel(props) {
           min={1995}
           max={2015}
           step={1}
-          onChange={evt => props.onChange(evt.target.value)}
+          onChange={(evt) => props.onChange(Number(evt.target.value) as number)}
         />
       </div>
     </div>

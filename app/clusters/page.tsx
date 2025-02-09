@@ -2,8 +2,9 @@
 import * as React from 'react';
 import {useRef} from 'react';
 import {Map, Source, Layer} from 'react-map-gl/mapbox';
-
+import { MapLayerMouseEvent } from 'mapbox-gl';
 import ControlPanel from './control-panel';
+import { Point} from 'geojson';
 import {clusterLayer, clusterCountLayer, unclusteredPointLayer} from './layers';
 
 import type {MapRef} from 'react-map-gl/mapbox';
@@ -14,20 +15,24 @@ const MAPBOX_TOKEN = 'pk.eyJ1IjoiZ2U0NDU0IiwiYSI6ImNtNGJtbTJuZzAxZW8ya3BmdjhpbWs
 export default function App() {
   const mapRef = useRef<MapRef>(null);
 
-  const onClick = event => {
+  const onClick = (event: MapLayerMouseEvent) => {
+      if (!event.features || event.features.length === 0) return;
+    
     const feature = event.features[0];
-    const clusterId = feature.properties.cluster_id;
+    const clusterId = feature.properties?.cluster_id;
 
-    const mapboxSource = mapRef.current.getSource('earthquakes') as GeoJSONSource;
+    const mapboxSource = mapRef.current?.getSource('earthquakes') as GeoJSONSource;
 
     mapboxSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
       if (err) {
         return;
       }
+      const targetZoom = zoom ?? mapRef.current?.getZoom();
+      const coordinates = (feature.geometry as Point).coordinates as [number, number];
 
-      mapRef.current.easeTo({
-        center: feature.geometry.coordinates,
-        zoom,
+      mapRef.current?.easeTo({
+        center: coordinates,
+        zoom: targetZoom,
         duration: 500
       });
     });
@@ -44,7 +49,7 @@ export default function App() {
         style={{width: "100vw", height: "100vh"}}
         mapStyle="mapbox://styles/mapbox/dark-v9"
         mapboxAccessToken={MAPBOX_TOKEN}
-        interactiveLayerIds={[clusterLayer.id]}
+        interactiveLayerIds={[clusterLayer.id ?? "default-layer-id"]}
         onClick={onClick}
         ref={mapRef}
       >

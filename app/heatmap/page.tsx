@@ -1,41 +1,50 @@
 "use client"
 import * as React from 'react';
-import {useState, useEffect, useMemo} from 'react';
-import MapGL, {Source, Layer} from 'react-map-gl/mapbox';
+import { useState, useEffect, useMemo } from 'react';
+import MapGL, { Source, Layer } from 'react-map-gl/mapbox';
+import { heatmapLayer } from './map-style';
+import { FeatureCollection, Point, GeoJsonProperties } from 'geojson';
 import ControlPanel from './control-panel';
-import {heatmapLayer} from './map-style';
 
-const MAPBOX_TOKEN = 'pk.eyJ1IjoiZ2U0NDU0IiwiYSI6ImNtNGJtbTJuZzAxZW8ya3BmdjhpbWszNXIifQ.1vr_N_sw1FCOMKnbvVXxZg'; // Set your mapbox token here
+const MAPBOX_TOKEN = 'your-mapbox-token';
 
-function filterFeaturesByDay(featureCollection, time) {
+
+function filterFeaturesByDay(
+  featureCollection: FeatureCollection<Point, GeoJsonProperties>,
+  time: number
+): FeatureCollection<Point, GeoJsonProperties> {
   const date = new Date(time);
   const year = date.getFullYear();
   const month = date.getMonth();
   const day = date.getDate();
+
   const features = featureCollection.features.filter(feature => {
-    const featureDate = new Date(feature.properties.time);
+    const properties = feature.properties;
+    if (!properties || !properties.time) {
+      // Skip this feature if properties or time is missing
+      return false;
+    }
+
+    const featureDate = new Date(properties.time);
     return (
       featureDate.getFullYear() === year &&
       featureDate.getMonth() === month &&
       featureDate.getDate() === day
     );
   });
-  return {type: 'FeatureCollection', features};
+  return { type: 'FeatureCollection', features };
 }
 
 export default function App() {
-  const [allDays, useAllDays] = useState(true);
-  const [timeRange, setTimeRange] = useState([0, 0]);
-  const [selectedTime, selectTime] = useState(0);
-  const [earthquakes, setEarthQuakes] = useState(null);
+  const [allDays, useAllDays] = useState<boolean>(true);
+  const [timeRange, setTimeRange] = useState<[number, number]>([0, 0]);
+  const [selectedTime, selectTime] = useState<number>(0);
+  const [earthquakes, setEarthQuakes] = useState<FeatureCollection<Point, GeoJsonProperties> | null>(null);
 
   useEffect(() => {
-    /* global fetch */
     fetch('https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson')
       .then(resp => resp.json())
       .then(json => {
-        // Note: In a real application you would do a validation of JSON data before doing anything with it,
-        // but for demonstration purposes we ingore this part here and just trying to select needed data...
         const features = json.features;
         const endTime = features[0].properties.time;
         const startTime = features[features.length - 1].properties.time;
@@ -44,11 +53,11 @@ export default function App() {
         setEarthQuakes(json);
         selectTime(endTime);
       })
-      .catch(err => console.error('Could not load data', err)); // eslint-disable-line
+      .catch(err => console.error('Could not load data', err));
   }, []);
 
   const data = useMemo(() => {
-    return allDays ? earthquakes : filterFeaturesByDay(earthquakes, selectedTime);
+    return allDays ? earthquakes : filterFeaturesByDay(earthquakes!, selectedTime);
   }, [earthquakes, allDays, selectedTime]);
 
   return (
@@ -57,9 +66,9 @@ export default function App() {
         initialViewState={{
           latitude: 40,
           longitude: -100,
-          zoom: 3
+          zoom: 3,
         }}
-        style={{width: "100vw", height: "100vh"}}
+        style={{ width: '100vw', height: '100vh' }}
         mapStyle="mapbox://styles/mapbox/dark-v9"
         mapboxAccessToken={MAPBOX_TOKEN}
       >

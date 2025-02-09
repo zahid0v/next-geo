@@ -15,6 +15,7 @@
     "@turf/bbox": "^7.2.0",
     "@turf/destination": "^7.2.0",
     "@turf/distance": "^7.2.0",
+    "@types/geojson": "^7946.0.16",
     "@vis.gl/react-google-maps": "^1.5.1",
     "classnames": "^2.5.1",
     "d3-array": "^3.2.4",
@@ -27,6 +28,8 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/d3-array": "^3.2.1",
+    "@types/d3-scale": "^4.0.9",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
