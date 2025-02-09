@@ -6,7 +6,7 @@ import { heatmapLayer } from './map-style';
 import { FeatureCollection, Point, GeoJsonProperties } from 'geojson';
 import ControlPanel from './control-panel';
 
-const MAPBOX_TOKEN = 'your-mapbox-token';
+const MAPBOX_TOKEN = "pk.eyJ1IjoiZ2U0NDU0IiwiYSI6ImNtNGJtbTJuZzAxZW8ya3BmdjhpbWszNXIifQ.1vr_N_sw1FCOMKnbvVXxZg";
 
 
 function filterFeaturesByDay(

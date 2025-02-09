@@ -1,7 +1,8 @@
+import { StaticImageData } from 'next/image';
 export interface RealEstateListing {
   uuid: string;
   details: ListingDetails;
-  images: string[];
+  images: StaticImageData[]; 
 }
 
 export interface ListingDetails {

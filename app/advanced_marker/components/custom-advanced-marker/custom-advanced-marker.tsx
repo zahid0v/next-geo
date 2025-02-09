@@ -1,7 +1,7 @@
 import React, {FunctionComponent, useState} from 'react';
 import {AdvancedMarker} from '@vis.gl/react-google-maps';
-import classNames from 'classnames';
 
+import classNames from 'classnames';
 import {RealEstateListingDetails} from '../real-estate-listing-details/real-estate-listing-details';
 import {RealEstateGallery} from '../real-estate-gallery/real-estate-gallery';
 import {RealEstateIcon} from '../../icons/real-estate-icon';

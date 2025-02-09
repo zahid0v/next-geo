@@ -1,10 +1,10 @@
 import React, {useState, FunctionComponent, MouseEvent} from 'react';
-
+import { StaticImageData } from 'next/image';
 import './real-estate-gallery.css';
 import Image from 'next/image';
 
 interface Props {
-  images: string[];
+  images: StaticImageData[];
   isExtended: boolean;
 }
 
